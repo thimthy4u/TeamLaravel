@@ -11,9 +11,14 @@ class RoleController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $req)
     {
-        //
+        $data = Role::latest();
+        $role = $data->paginate($req->per_page);
+
+        return response()->json([
+            'data'=>'test'
+        ]);
     }
 
     /**
@@ -29,7 +34,23 @@ class RoleController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        try{
+            $inputs['name']=$request->name;
+            $inputs['code']=$request->code;
+            $inputs['description']=$request->description;
+            $inputs['status']=$request->status;
+            $role = role::create($inputs);
+
+            if($role){
+                return response()->json([
+                    'data'=>$role,
+                    'message'=>'Insert Successfully!'
+                ]);
+            }
+
+        }catch(\Throwable $th){
+            return $th->getMessage();
+        }
     }
 
     /**
