@@ -1,0 +1,24 @@
+> php artisan install:api
+> php artisan make:migrate create_user_table
+
+-- VannSue
+>php artisan make:controller V1/User/UserController --resource --model=Users/User
+
+>php artisan make:resource V1/User/UserCollection
+>php artisan make:resource V1/User/UserResource
+>php artisan make:resource V1/User/UserSingleResource
+
+-- Thim
+
+>php artisan make:controller V1/Role/RoleController --resource --model=Role/Role
+
+>php artisan make:resource V1/Role/RoleCollection
+>php artisan make:resource V1/Role/RoleResource
+>php artisan make:resource V1/Role/UserSingleResource
+
++ Create Role Table
+>php artisan make:migration create_role_table
+- name
+- code
+- description
+- status
