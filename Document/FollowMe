@@ -9,7 +9,6 @@
 >php artisan make:resource V1/User/UserSingleResource
 
 -- Thim
-
 >php artisan make:controller V1/Role/RoleController --resource --model=Role/Role
 
 >php artisan make:resource V1/Role/RoleCollection
@@ -22,3 +21,13 @@
 - code
 - description
 - status
+
++ Create User Table
+>php artisan make:migration create_user_table
+-id
+-uuid
+-name
+-email
+-sex
+-phone
+-password
