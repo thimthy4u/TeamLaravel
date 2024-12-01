@@ -10,3 +10,5 @@ use Illuminate\Support\Facades\Route;
 
 
 Route::apiResource('/role',RoleController::class);
+Route::put("/user/{uuid}/update", [UserController::class,"updateByUUID"]);
+Route::delete("/user/{uuid}/delete", [UserController::class,"deleteByUUID"]);
