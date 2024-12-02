@@ -10,6 +10,7 @@ class User extends Model
         'uuid',
         'name',
         'sex',
+        'dob',
         'phone',
         'email',
         'password',

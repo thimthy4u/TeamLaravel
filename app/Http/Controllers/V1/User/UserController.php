@@ -3,21 +3,32 @@
 namespace App\Http\Controllers\V1\User;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\userRequest;
+use App\Http\Resources\V1\User\UserCollection;
+use App\Http\Resources\V1\User\UserResource;
+use App\Http\Resources\V1\User\UserSingleResource;
 use App\Models\Users\User;
+// use Faker\Core\Uuid;
 use Illuminate\Http\Request;
+
+use Ramsey\Uuid\Uuid;
 
 class UserController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
         $user = user::latest();
-        $user = $user->where('name','like','%'. $request->name .'%')->paginate($request->perpage);
+        $user = $user->where('name','like','%'.$request->name.'%')->paginate($request->perpage);
+
         return response()->json(
             [
-                'date' => new UserController($user),
+                'data' => new UserCollection($user),
+                // 'pagination'=>[
+                //     'totalPage' => $user->total()
+                // ]
             ]
         );
     }
@@ -35,20 +46,21 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        $inputs['uuid'] = Uuid::uuid4();
-        $inputs['name'] = $request->name;
-        $inputs['email'] = $request->email;
-        $inputs['sex'] = $request->sex;
-        $inputs['phone']=$request->phone;
-        $inputs['password'] =$request->password;
-
-        $user = User::create($inputs);
-        if ($user) {
-        return response()->json([
-            // 'user'=> $user,
-            'message'=>'insert successfully'
-            ]);
-        }
+            $inputs['uuid'] = Uuid::uuid4();
+            $inputs['name'] = $request->name;
+            $inputs['sex'] = $request->sex;
+            $inputs['dob'] = $request->dob;
+            $inputs['phone']=$request->phone;
+            $inputs['email'] = $request->email;
+            $inputs['password'] =$request->password;
+            
+            $user = User::create($inputs);
+            if ($user) {
+                return response()->json([
+                    // 'user'=> $user,
+                    'message'=>'insert successfully'
+                ]);
+            }
     }
 
     /**
@@ -73,9 +85,11 @@ class UserController extends Controller
     public function update(Request $request, User $user)
     {
         $inputs['name'] = $request->name;
-        $inputs['email'] = $request->email;
         $inputs['sex'] = $request->sex;
-        $inputs['phone']=$request->phone;
+        $inputs['dob'] = $request->dob;
+        $inputs['phone'] = $request->phone;
+        $inputs['email'] = $request->email;
+        $inputs['password'] = $request->password;
         if( $user ){
             $user = $user->update($inputs);
             return response()->json([
@@ -98,9 +112,11 @@ class UserController extends Controller
         // ]);
 
         $inputs['name'] = $request->name;
-        $inputs['email'] = $request->email;
         $inputs['sex'] = $request->sex;
+        $inputs['dob'] = $request->dob;
         $inputs['phone'] = $request->phone;
+        $inputs['email'] = $request->email;
+        $inputs['password'] = $request->password;
         if($user){
             $user->update($inputs);
             return response()->json([
