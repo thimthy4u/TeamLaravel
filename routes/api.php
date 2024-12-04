@@ -14,4 +14,4 @@ Route::delete('/user/{id}/image',[UserController::class,'deletedImage']);
 // Route::get('/user/{uuid}',[UserController::class,'indexByUUID']);
 Route::put('/user/{uuid}/edit',[UserController::class,'updateByUUID']);
 Route::delete('/user/{uuid}/delete',[UserController::class,'deleteByUUID']);
-Route::get('/users', [UserController::class, 'index']);
+Route::get('/user', [UserController::class, 'index']);

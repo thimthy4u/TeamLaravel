@@ -8,9 +8,8 @@ use App\Http\Resources\V1\User\UserCollection;
 use App\Http\Resources\V1\User\UserResource;
 use App\Http\Resources\V1\User\UserSingleResource;
 use App\Models\Users\User;
-// use Faker\Core\Uuid;
 use Illuminate\Http\Request;
-
+use Ramsey\Uuid\Nonstandard\Uuid as NonstandardUuid;
 use Ramsey\Uuid\Uuid;
 
 class UserController extends Controller
@@ -20,8 +19,8 @@ class UserController extends Controller
      */
     public function index(Request $request)
     {
-        $user = user::latest();
-        $user = $user->where('name','like','%'.$request->name.'%')->paginate($request->perpage);
+        $user = User::latest();
+        $user = $user->where('name','like','%'.$request->name.'%')->paginate($request->per_page);
 
         return response()->json(
             [
@@ -46,7 +45,7 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-            $inputs['uuid'] = Uuid::uuid4();
+            $inputs['uuid']= Uuid::uuid4();
             $inputs['name'] = $request->name;
             $inputs['sex'] = $request->sex;
             $inputs['dob'] = $request->dob;
@@ -84,6 +83,7 @@ class UserController extends Controller
      */
     public function update(Request $request, User $user)
     {
+        $inputs['uuid'] = Uuid::uuid4();
         $inputs['name'] = $request->name;
         $inputs['sex'] = $request->sex;
         $inputs['dob'] = $request->dob;
